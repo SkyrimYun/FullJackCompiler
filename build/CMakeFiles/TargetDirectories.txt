@@ -1,0 +1,3 @@
+C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/JackCompiler.dir
+C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/edit_cache.dir
+C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/rebuild_cache.dir

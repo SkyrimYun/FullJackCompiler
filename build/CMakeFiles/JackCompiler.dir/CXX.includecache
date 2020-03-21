@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/JackAnalyzer.h
+iostream
+-
+fstream
+-
+string
+-
+sstream
+-
+algorithm
+-
+map
+-
+vector
+-
+io.h
+-
+
+C:/Users/skyri/projects/FullJackCompiler/src/CompilationEngine.cpp
+JackAnalyzer.h
+C:/Users/skyri/projects/FullJackCompiler/src/JackAnalyzer.h
+

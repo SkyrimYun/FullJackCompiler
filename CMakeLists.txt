@@ -7,6 +7,7 @@ set(SOURCES
     src/main.cpp
     src/JackAnalyzer.cpp
     src/JackTokenizer.cpp
+    src/SymbolTable.cpp
 )
 
 add_executable(JackCompiler ${SOURCES})

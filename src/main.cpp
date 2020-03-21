@@ -53,7 +53,7 @@ int main()
     {
         vector<string> files;
 
-        string inputPath = "C:/Users/skyri/projects/FullJackCompiler/test/Square.jack";
+        string inputPath = "C:/Users/skyri/projects/FullJackCompiler/test/Ball.jack";
 
         getAllFiles(inputPath, files);
 

@@ -16,7 +16,11 @@ void CompilationEngine::writeXML()
     }
     case IDENTIFIER:
     {
-        writeLine("<identifier> " + tokenizer.identifier() + " </identifier>");
+        string name = tokenizer.tokenVal();
+        if (ST.KindOf(name) != NONE)
+            writeLine("<identifier> " + tokenizer.identifier() + " </identifier> " + ST.TypeOf(name) + " " + to_string(ST.KindOf(name)) + " " + to_string(ST.IndexOf(name)));
+        else
+            writeLine("<identifier> " + tokenizer.identifier() + " </identifier> ");
         break;
     }
     case SYMBOL:
@@ -96,22 +100,47 @@ void CompilationEngine::CompileClass()
 void CompilationEngine::CompileClassVarDec()
 {
     writeLine("<classVarDec>");
+
     writeXML();
+    int kind = tokenizer.keyWord(); // kind of the variable (field or static)
+
+    tokenizer.advance();
+    writeXML();
+    string type = tokenizer.tokenVal(); // type of the variable
+
+    vector<string> varName;
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ';'))
     {
         tokenizer.advance();
-        if (tokenizer.tokenType() == KEYWORD || tokenizer.tokenType() == SYMBOL || tokenizer.tokenType() == IDENTIFIER)
+        if (tokenizer.tokenType() == IDENTIFIER)
+        {
+            writeXML();
+            varName.push_back(tokenizer.tokenVal());
+        }
+        else if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ',')
         {
             writeXML();
         }
     }
+
+    for (string name : varName)
+    {
+        ST.define(name, type, kind);
+    }
+
     writeLine("</classVarDec>");
 }
 
 void CompilationEngine::CompileSubroutineDec()
 {
     writeLine("<subroutineDec>");
-    writeXML();
+    writeXML(); // write type of subroutine (constructor, method, function)
+
+    ST.startSubroutine();
+    if (tokenizer.tokenVal() == "method")
+        ST.define("this", tokenizer.tokenVal(), ARGUMENT); // write 'this' to argument 0
+
+    // write the return type and the name of this subroutine
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '('))
     {
         tokenizer.advance();
@@ -143,12 +172,21 @@ void CompilationEngine::CompileParameterList()
         tokenizer.advance();
         if (tokenizer.tokenType() == KEYWORD || tokenizer.tokenType() == IDENTIFIER)
         {
-            writeXML();
+            writeXML();                         // write type of the argument
+            string type = tokenizer.tokenVal(); // type of the variable
+
+            tokenizer.advance();
+            if (tokenizer.tokenType() == KEYWORD || tokenizer.tokenType() == IDENTIFIER)
+            {
+                writeXML();                         // write name of the argument
+                string name = tokenizer.tokenVal(); // name of the variable
+                ST.define(name, type, ARGUMENT);
+            }
         }
 
         if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() != ')')
         {
-            writeXML();
+            writeXML(); // write ','
         }
     }
     writeLine("</parameterList>");
@@ -175,13 +213,29 @@ void CompilationEngine::CompileVarDec()
 {
     writeLine("<varDec>");
     writeXML();
+
+    tokenizer.advance();
+    writeXML();
+    string type = tokenizer.tokenVal(); // type of the variable
+
+    vector<string> varName;
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ';'))
     {
         tokenizer.advance();
-        if (tokenizer.tokenType() == KEYWORD || tokenizer.tokenType() == SYMBOL || tokenizer.tokenType() == IDENTIFIER)
+        if (tokenizer.tokenType() == IDENTIFIER)
+        {
+            writeXML();
+            varName.push_back(tokenizer.tokenVal());
+        }
+        else if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ',')
         {
             writeXML();
         }
+    }
+
+    for (string name : varName)
+    {
+        ST.define(name, type, LOCAL);
     }
     writeLine("</varDec>");
 }

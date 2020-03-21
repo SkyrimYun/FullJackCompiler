@@ -10,6 +10,9 @@ CMakeFiles/JackCompiler.dir/src/JackAnalyzer.cpp.obj: ../src/JackAnalyzer.cpp
 CMakeFiles/JackCompiler.dir/src/JackTokenizer.cpp.obj: ../include/JackAnalyzer.h
 CMakeFiles/JackCompiler.dir/src/JackTokenizer.cpp.obj: ../src/JackTokenizer.cpp
 
+CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.obj: ../include/JackAnalyzer.h
+CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.obj: ../src/SymbolTable.cpp
+
 CMakeFiles/JackCompiler.dir/src/main.cpp.obj: ../include/JackAnalyzer.h
 CMakeFiles/JackCompiler.dir/src/main.cpp.obj: ../src/main.cpp
 

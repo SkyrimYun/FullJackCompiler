@@ -36,6 +36,54 @@ using namespace std;
 #define NULL 24
 #define THIS 25
 #define INVALID 26
+#define ARGUMENT 27
+#define LOCAL 28
+#define NONE 29
+
+class SymbolTable
+{
+private:
+    struct Variable
+    {
+        string type;
+        int kind;
+        int index;
+
+        Variable(string type, int kind, int index) : type(type), kind(kind), index(index){};
+        Variable(){};
+    };
+
+    map<string, Variable> classST;
+    map<string, Variable> subST;
+
+    int fieldCount;
+    int staticCount;
+    int argCount;
+    int localCount;
+
+public:
+    SymbolTable() : fieldCount(0), staticCount(0), argCount(0), localCount(0){};
+
+    //starts a new subroutine scope (resets the subroutine's symbol table)
+    void startSubroutine();
+
+    //defines a new identifier of the given name, type, and kind, and assigns it a runing index.
+    //STATIC and FIELD identifiers have a class scope, while ARG and VAR identifier have a subroutine scop
+    void define(string name, string type, int kind);
+
+    //returns the number of variables of the given kind already defined in the current scope
+    int VarCount(int kind);
+
+    //returns the kind of the named identifier in the current scope.
+    //if the identifier is unknown in the current scope, returns NONE
+    int KindOf(string name);
+
+    //returns the type of the named identifier in the current scope
+    string TypeOf(string name);
+
+    //returns the index assigned to the named identifier
+    int IndexOf(string name);
+};
 
 class JackTokenizer
 {
@@ -144,6 +192,7 @@ class CompilationEngine
 private:
     JackTokenizer tokenizer;
     ofstream ost;
+    SymbolTable ST;
 
     void writeLine(string);
     void writeXML();
@@ -209,4 +258,34 @@ public:
     JackAnalyzer(string &path) : filepath(path){};
 
     void beginAnalyzing();
+};
+
+class VMWriter
+{
+public:
+    //create a new output .vm file and prepares it for writing
+    VMWriter(string);
+
+    //writes a VM push command
+    void writePush(int segment, int index);
+
+    //write a VM pop command
+    void writePop(int segment, int index);
+
+    //writes a VM arithmetic-logical command
+    void writeArithmetic(char);
+
+    void writeLabel(string label);
+
+    void writeGoto(string label);
+
+    void writeIf(string label);
+
+    void writeCall(string name, int nArgs);
+
+    void writeFuncation(string name, int nLocals);
+
+    void writeReturn();
+
+    void close();
 };

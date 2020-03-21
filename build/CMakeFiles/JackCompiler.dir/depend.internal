@@ -10,6 +10,9 @@ CMakeFiles/JackCompiler.dir/src/JackAnalyzer.cpp.obj
 CMakeFiles/JackCompiler.dir/src/JackTokenizer.cpp.obj
  ../include/JackAnalyzer.h
  C:/Users/skyri/projects/FullJackCompiler/src/JackTokenizer.cpp
+CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.obj
+ ../include/JackAnalyzer.h
+ C:/Users/skyri/projects/FullJackCompiler/src/SymbolTable.cpp
 CMakeFiles/JackCompiler.dir/src/main.cpp.obj
  ../include/JackAnalyzer.h
  C:/Users/skyri/projects/FullJackCompiler/src/main.cpp

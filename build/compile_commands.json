@@ -18,5 +18,10 @@
   "directory": "C:/Users/skyri/projects/FullJackCompiler/build",
   "command": "A:\\mingw-w64\\mingw64\\bin\\g++.exe   @CMakeFiles/JackCompiler.dir/includes_CXX.rsp -g   -o CMakeFiles\\JackCompiler.dir\\src\\JackTokenizer.cpp.obj -c C:\\Users\\skyri\\projects\\FullJackCompiler\\src\\JackTokenizer.cpp",
   "file": "C:/Users/skyri/projects/FullJackCompiler/src/JackTokenizer.cpp"
+},
+{
+  "directory": "C:/Users/skyri/projects/FullJackCompiler/build",
+  "command": "A:\\mingw-w64\\mingw64\\bin\\g++.exe   @CMakeFiles/JackCompiler.dir/includes_CXX.rsp -g   -o CMakeFiles\\JackCompiler.dir\\src\\SymbolTable.cpp.obj -c C:\\Users\\skyri\\projects\\FullJackCompiler\\src\\SymbolTable.cpp",
+  "file": "C:/Users/skyri/projects/FullJackCompiler/src/SymbolTable.cpp"
 }
 ]

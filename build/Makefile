@@ -220,6 +220,33 @@ src/JackTokenizer.cpp.s:
 	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/JackTokenizer.cpp.s
 .PHONY : src/JackTokenizer.cpp.s
 
+src/SymbolTable.obj: src/SymbolTable.cpp.obj
+
+.PHONY : src/SymbolTable.obj
+
+# target to build an object file
+src/SymbolTable.cpp.obj:
+	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.obj
+.PHONY : src/SymbolTable.cpp.obj
+
+src/SymbolTable.i: src/SymbolTable.cpp.i
+
+.PHONY : src/SymbolTable.i
+
+# target to preprocess a source file
+src/SymbolTable.cpp.i:
+	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.i
+.PHONY : src/SymbolTable.cpp.i
+
+src/SymbolTable.s: src/SymbolTable.cpp.s
+
+.PHONY : src/SymbolTable.s
+
+# target to generate assembly for a file
+src/SymbolTable.cpp.s:
+	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.s
+.PHONY : src/SymbolTable.cpp.s
+
 src/main.obj: src/main.cpp.obj
 
 .PHONY : src/main.obj
@@ -265,6 +292,9 @@ help:
 	@echo ... src/JackTokenizer.obj
 	@echo ... src/JackTokenizer.i
 	@echo ... src/JackTokenizer.s
+	@echo ... src/SymbolTable.obj
+	@echo ... src/SymbolTable.i
+	@echo ... src/SymbolTable.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s

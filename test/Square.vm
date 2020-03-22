@@ -1,0 +1,126 @@
+push argument 0
+push argument 1
+push argument 2
+push this 0
+push this 1
+push this 0
+add
+push this 2
+push this 1
+add
+push this 2
+push this 0
+push this 1
+push this 0
+add
+push this 2
+push this 1
+add
+push this 2
+push this 1
+add
+push this 2
+lt
+and
+push this 0
+add
+push this 2
+lt
+push this 2
+add
+push this 2
+gt
+push this 2
+b
+push this 1
+gt
+push this 0
+push this 1
+add
+push this 2
+b
+push this 0
+add
+push this 2
+push this 1
+add
+push this 2
+push this 1
+b
+push this 0
+push this 1
+push this 0
+add
+push this 2
+push this 1
+add
+push this 1
+add
+push this 2
+lt
+push this 0
+push this 1
+push this 0
+add
+push this 2
+push this 1
+add
+push this 1
+add
+push this 0
+push this 1
+add
+push this 2
+b
+push this 0
+add
+push this 2
+push this 1
+add
+push this 2
+push this 0
+gt
+push this 0
+add
+push this 2
+b
+push this 1
+push this 0
+add
+push this 2
+push this 1
+add
+push this 2
+push this 0
+b
+push this 0
+push this 1
+push this 0
+add
+push this 1
+add
+push this 2
+push this 0
+add
+push this 2
+lt
+push this 0
+push this 1
+push this 0
+add
+push this 1
+add
+push this 2
+push this 0
+add
+push this 0
+add
+push this 2
+b
+push this 1
+push this 0
+add
+push this 2
+push this 1
+add
+push this 2

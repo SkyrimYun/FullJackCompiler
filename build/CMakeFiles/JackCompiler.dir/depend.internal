@@ -13,6 +13,9 @@ CMakeFiles/JackCompiler.dir/src/JackTokenizer.cpp.obj
 CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.obj
  ../include/JackAnalyzer.h
  C:/Users/skyri/projects/FullJackCompiler/src/SymbolTable.cpp
+CMakeFiles/JackCompiler.dir/src/VMWriter.cpp.obj
+ ../include/JackAnalyzer.h
+ C:/Users/skyri/projects/FullJackCompiler/src/VMWriter.cpp
 CMakeFiles/JackCompiler.dir/src/main.cpp.obj
  ../include/JackAnalyzer.h
  C:/Users/skyri/projects/FullJackCompiler/src/main.cpp

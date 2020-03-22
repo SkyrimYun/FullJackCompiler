@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/skyri/projects/FullJackCompiler/src/JackAnalyzer.cpp" "C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/JackCompiler.dir/src/JackAnalyzer.cpp.obj"
   "C:/Users/skyri/projects/FullJackCompiler/src/JackTokenizer.cpp" "C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/JackCompiler.dir/src/JackTokenizer.cpp.obj"
   "C:/Users/skyri/projects/FullJackCompiler/src/SymbolTable.cpp" "C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.obj"
+  "C:/Users/skyri/projects/FullJackCompiler/src/VMWriter.cpp" "C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/JackCompiler.dir/src/VMWriter.cpp.obj"
   "C:/Users/skyri/projects/FullJackCompiler/src/main.cpp" "C:/Users/skyri/projects/FullJackCompiler/build/CMakeFiles/JackCompiler.dir/src/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

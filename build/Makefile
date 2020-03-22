@@ -247,6 +247,33 @@ src/SymbolTable.cpp.s:
 	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/SymbolTable.cpp.s
 .PHONY : src/SymbolTable.cpp.s
 
+src/VMWriter.obj: src/VMWriter.cpp.obj
+
+.PHONY : src/VMWriter.obj
+
+# target to build an object file
+src/VMWriter.cpp.obj:
+	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/VMWriter.cpp.obj
+.PHONY : src/VMWriter.cpp.obj
+
+src/VMWriter.i: src/VMWriter.cpp.i
+
+.PHONY : src/VMWriter.i
+
+# target to preprocess a source file
+src/VMWriter.cpp.i:
+	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/VMWriter.cpp.i
+.PHONY : src/VMWriter.cpp.i
+
+src/VMWriter.s: src/VMWriter.cpp.s
+
+.PHONY : src/VMWriter.s
+
+# target to generate assembly for a file
+src/VMWriter.cpp.s:
+	$(MAKE) -f CMakeFiles\JackCompiler.dir\build.make CMakeFiles/JackCompiler.dir/src/VMWriter.cpp.s
+.PHONY : src/VMWriter.cpp.s
+
 src/main.obj: src/main.cpp.obj
 
 .PHONY : src/main.obj
@@ -295,6 +322,9 @@ help:
 	@echo ... src/SymbolTable.obj
 	@echo ... src/SymbolTable.i
 	@echo ... src/SymbolTable.s
+	@echo ... src/VMWriter.obj
+	@echo ... src/VMWriter.i
+	@echo ... src/VMWriter.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s

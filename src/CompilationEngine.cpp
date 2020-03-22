@@ -60,10 +60,11 @@ void CompilationEngine::writeXML()
     }
 }
 
-CompilationEngine::CompilationEngine(JackTokenizer &jt, string &s)
+CompilationEngine::CompilationEngine(JackTokenizer &jt, VMWriter &wt, string &xml)
 {
     tokenizer = jt;
-    ost = ofstream(s);
+    writer = wt;
+    ost = ofstream(xml);
     CompileClass();
 }
 
@@ -86,6 +87,11 @@ void CompilationEngine::CompileClass()
             }
             else
             {
+                if (!isClassNameStore)
+                {
+                    className = tokenizer.tokenVal();
+                    isClassNameStore = true;
+                }
                 writeXML();
             }
         }
@@ -138,7 +144,7 @@ void CompilationEngine::CompileSubroutineDec()
 
     ST.startSubroutine();
     if (tokenizer.tokenVal() == "method")
-        ST.define("this", tokenizer.tokenVal(), ARGUMENT); // write 'this' to argument 0
+        ST.define("this", className, ARGUMENT); // write 'this' to argument 0
 
     // write the return type and the name of this subroutine
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '('))
@@ -429,7 +435,8 @@ void CompilationEngine::CompiileExpression()
 
         if (tokenizer.tokenType() == SYMBOL && tokenizer.isOperator())
         {
-            writeXML();
+            writeXML(); // write operator
+            writer.writeArithmetic(tokenizer.symbol());
         }
 
     } while (tokenizer.tokenType() == SYMBOL && tokenizer.isOperator());
@@ -448,6 +455,8 @@ void CompilationEngine::CompileTerm()
     //term is an identifier
     if (tokenizer.tokenType() == IDENTIFIER)
     {
+        string Name = tokenizer.identifier();
+
         tokenizer.advance();
 
         //next token is a symbol
@@ -461,18 +470,28 @@ void CompilationEngine::CompileTerm()
                 writeXML(); // write "."
                 tokenizer.advance();
                 writeXML(); // write "method"
+                string methodName = tokenizer.identifier();
                 tokenizer.advance();
                 writeXML(); //write "("
-                CompileExpressionList();
+
+                // push this object to stack as argument 0
+                writer.writePush(ST.KindOf(Name), ST.IndexOf(Name));
+
+                int numArg = CompileExpressionList() + 1;
                 writeXML(); //write ")"
+
+                string funcationCall = Name + '.' + methodName;
+                writer.writeCall(funcationCall, numArg);
                 break;
             }
             //varName()
             case '(':
             {
                 writeXML();
-                CompileExpressionList();
+                writer.writePush(POINTER, 0);
+                int numArg = CompileExpressionList() + 1;
                 writeXML(); //write ")"
+                writer.writeCall(Name, numArg);
                 break;
             }
             //varName[]
@@ -480,25 +499,35 @@ void CompilationEngine::CompileTerm()
             {
                 writeXML();
                 CompiileExpression();
+
+                writer.writePush(ST.KindOf(Name), ST.IndexOf(Name));
+                writer.writeArithmetic('+');
+                writer.writePop(POINTER, 1);
+                writer.writePush(THAT, 0);
+
                 tokenizer.advance();
                 writeXML(); // write "]"
                 break;
             }
+            // other operands
             default:
             {
                 tokenizer.rollBack();
+                writer.writePush(ST.KindOf(tokenizer.tokenVal()), ST.IndexOf(tokenizer.tokenVal()));
             }
             }
         }
         else
         {
             tokenizer.rollBack();
+            writer.writePush(ST.KindOf(tokenizer.tokenVal()), ST.IndexOf(tokenizer.tokenVal()));
         }
     }
     else if (tokenizer.tokenType() == SYMBOL && (tokenizer.symbol() == '-' || tokenizer.symbol() == '~'))
     {
         tokenizer.advance();
         CompileTerm();
+        writer.writeArithmetic(tokenizer.symbol());
     }
     else if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '(')
     {
@@ -506,20 +535,70 @@ void CompilationEngine::CompileTerm()
         tokenizer.advance();
         writeXML(); // write ")"
     }
+    else if (tokenizer.tokenType() == STRING_CONST)
+    {
+        string val = tokenizer.stringVal();
+        writer.writePush(CONSTANT, val.length());
+        writer.writeCall("String.new", 1);
+        for (int i = 0; i < val.length(); i++)
+        {
+            writer.writePush(CONSTANT, val[i]);
+            writer.writeCall("String.appendChar", 2);
+        }
+    }
+    else if (tokenizer.tokenType() == INT_CONST)
+    {
+        writer.writePush(CONSTANT, tokenizer.intVal());
+    }
+    else if (tokenizer.tokenType() == KEYWORD)
+    {
+        string curKey = tokenizer.tokenVal();
+        if (curKey == "true" || curKey == "flase" || curKey = "null" || curKey == "this")
+        {
+            switch (tokenizer.keyWord())
+            {
+            case TRUE:
+            {
+                writer.writePush(CONSTANT, 1);
+                writer.writeArithmetic('U');
+                break;
+            }
+
+            case FALSE:
+            {
+                writer.writePush(CONSTANT, 0);
+                break;
+            }
+
+            case THIS:
+            {
+                writer.writePush(POINTER, 0);
+                break;
+            }
+            case NULL:
+            {
+                writer.writePush(CONSTANT, 0);
+                break;
+            }
+            }
+        }
+    }
 
     writeLine("</term>");
 }
 
 //get into the functin as current token = '('
 //return ')'
-void CompilationEngine::CompileExpressionList()
+int CompilationEngine::CompileExpressionList()
 {
     writeLine("<expressionList>");
+    int count = 0;
 
     tokenizer.advance();
 
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ')'))
     {
+        count++;
 
         tokenizer.rollBack();
         CompiileExpression();
@@ -530,8 +609,8 @@ void CompilationEngine::CompileExpressionList()
         {
             writeXML();
             tokenizer.advance();
-        }
-    };
-
+        };
+    }
     writeLine("</expressionList>");
+    return count;
 }

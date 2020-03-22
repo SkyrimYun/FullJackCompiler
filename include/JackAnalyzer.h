@@ -39,6 +39,10 @@ using namespace std;
 #define ARGUMENT 27
 #define LOCAL 28
 #define NONE 29
+#define CONSTANT 30
+#define TEMP 31
+#define POINTER 32
+#define THAT 33
 
 class SymbolTable
 {
@@ -187,18 +191,72 @@ public:
     bool isOperator();
 };
 
+class JackAnalyzer
+{
+private:
+    string filepath;
+
+public:
+    JackAnalyzer(string &path) : filepath(path){};
+
+    void beginAnalyzing();
+};
+
+class VMWriter
+{
+private:
+    ofstream ofs;
+
+public:
+    //create a new output .vm file and prepares it for writing
+    VMWriter(ofstream &ofs);
+
+    VMWriter(){};
+
+    VMWriter &operator=(VMWriter &);
+
+    void writeLine(string);
+
+    //writes a VM push command
+    void writePush(int segment, int index);
+
+    //write a VM pop command
+    void writePop(int segment, int index);
+
+    //writes a VM arithmetic-logical command
+    void writeArithmetic(char);
+
+    void writeLabel(string label);
+
+    void writeGoto(string label);
+
+    void writeIf(string label);
+
+    void writeCall(string name, int nArgs);
+
+    void writeFuncation(string name, int nLocals);
+
+    void writeReturn();
+
+    void close();
+};
+
 class CompilationEngine
 {
 private:
     JackTokenizer tokenizer;
+    VMWriter writer;
     ofstream ost;
     SymbolTable ST;
+
+    string className;
+    bool isClassNameStore = false;
 
     void writeLine(string);
     void writeXML();
 
 public:
-    CompilationEngine(JackTokenizer &, string &);
+    CompilationEngine(JackTokenizer &, VMWriter &, string &);
 
     //compiles a complete class
     void CompileClass();
@@ -246,46 +304,5 @@ public:
     void CompileTerm();
 
     //compiles a (possibly empty) comma-separated list of expressions
-    void CompileExpressionList();
-};
-
-class JackAnalyzer
-{
-private:
-    string filepath;
-
-public:
-    JackAnalyzer(string &path) : filepath(path){};
-
-    void beginAnalyzing();
-};
-
-class VMWriter
-{
-public:
-    //create a new output .vm file and prepares it for writing
-    VMWriter(string);
-
-    //writes a VM push command
-    void writePush(int segment, int index);
-
-    //write a VM pop command
-    void writePop(int segment, int index);
-
-    //writes a VM arithmetic-logical command
-    void writeArithmetic(char);
-
-    void writeLabel(string label);
-
-    void writeGoto(string label);
-
-    void writeIf(string label);
-
-    void writeCall(string name, int nArgs);
-
-    void writeFuncation(string name, int nLocals);
-
-    void writeReturn();
-
-    void close();
+    int CompileExpressionList();
 };

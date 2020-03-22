@@ -61,7 +61,7 @@ void VMWriter::writePop(int segment, int index)
     case ARGUMENT:
         segmentN = "argument";
         break;
-    case THIS:
+    case FIELD:
         segmentN = "this";
         break;
     case THAT:
@@ -80,7 +80,7 @@ void VMWriter::writePop(int segment, int index)
         segmentN = "temp";
         break;
     default:
-        segmentN = "nmsl";
+        segmentN = to_string(segment);
     }
     writeLine("pop " + segmentN + " " + to_string(index));
 }

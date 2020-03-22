@@ -1046,10 +1046,6 @@ public:
 
     void compileVarDec()
     {
-        //writer.writeLine("<varDec>");
-        //writer.writeLine(tokenizer.getXML());
-
-        // tokenizer.advance();
 
         if (tokenizer.tokenType() == KEYWORD && tokenizer.keyWord() == VAR)
         {
@@ -1072,7 +1068,6 @@ public:
                 tokenizer.advanceTillValid();
             }
         }
-        //writer.writeLine("</varDec>");
     }
 
     void compileParameterList()
@@ -1101,14 +1096,7 @@ public:
                 name = tokenizer.identifier();
                 table.define(name, type, kind);
             }
-
-            if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() != ')')
-            {
-                //writer.writeLine(tokenizer.getXML());
-            }
         }
-        //writer.writeLine("</parameterList>");
-        //writer.writeLine(tokenizer.getXML());
     }
 
     void compileStatements()
@@ -1144,8 +1132,6 @@ public:
 
             tokenizer.advanceTillValid();
         }
-        //writer.writeLine("</statements>");
-        //writer.writeLine(tokenizer.getXML());
     }
 
     void compileDo()
@@ -1171,7 +1157,6 @@ public:
 
             if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '(')
             {
-                // //writer.writeLine(tokenizer.getXML());
 
                 if (identifier == "")
                 {
@@ -1197,7 +1182,6 @@ public:
 
         writerVM.writeCall(functionName, to_string(numberOfArguments));
         writerVM.writePop("temp", "0");
-        //writer.writeLine("</doStatement>");
     }
 
     void compileLet()
@@ -1217,10 +1201,6 @@ public:
         {
 
             tokenizer.advanceTillValid();
-            if (tokenizer.tokenType() == SYMBOL || tokenizer.tokenType() == IDENTIFIER)
-            {
-                //writer.writeLine(tokenizer.getXML());
-            }
 
             if (tokenizer.tokenType() == SYMBOL)
             {
@@ -1258,8 +1238,6 @@ public:
 
     void compileWhile()
     {
-        //writer.writeLine("<whileStatement>");
-        //writer.writeLine(tokenizer.getXML());
 
         int presentLabelCount = labelCount;
         labelCount++;
@@ -1269,13 +1247,12 @@ public:
             tokenizer.advanceTillValid();
             if (tokenizer.tokenType() == SYMBOL)
             {
-                //writer.writeLine(tokenizer.getXML()); //make this ebtter
+
                 if (tokenizer.symbol() == '(')
                 {
                     compileExpression();
                     writerVM.writeArithmetic('~');
                     writerVM.writeIf("endwhile" + to_string(presentLabelCount));
-                    // writerVM.writeLine(tokenizer.getXML());
                 }
 
                 if (tokenizer.symbol() == '{')
@@ -1287,8 +1264,6 @@ public:
         }
 
         writerVM.writeLabel("endwhile" + to_string(presentLabelCount));
-
-        //writer.writeLine("</whileStatement>");
     }
     //TODO Make return void correct
     //Make get XML better wiht an interface

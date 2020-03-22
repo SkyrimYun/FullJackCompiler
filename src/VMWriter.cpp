@@ -129,5 +129,39 @@ void VMWriter::writeArithmetic(char c)
 
 void VMWriter::writeCall(string name, int nArgs)
 {
+    if (name.find(".") == -1)
+    {
+        name = className + "." + name;
+    }
     writeLine("call " + name + " " + to_string(nArgs));
+}
+
+void VMWriter::writeReturn()
+{
+    writeLine("return");
+}
+
+void VMWriter::writeLabel(string label)
+{
+    writeLine("label " + label);
+}
+
+void VMWriter::writeGoto(string label)
+{
+    writeLine("goto " + label);
+}
+
+void VMWriter::writeIf(string label)
+{
+    writeLine("if-goto " + label);
+}
+
+void VMWriter::writeFuncation(string name, int nLocals)
+{
+    writeLine("function " + className + "." + name + " " + to_string(nLocals));
+}
+
+void VMWriter::setClassName(string &name)
+{
+    className = name;
 }

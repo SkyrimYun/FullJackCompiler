@@ -206,12 +206,15 @@ class VMWriter
 {
 private:
     ofstream ofs;
+    string className;
 
 public:
     //create a new output .vm file and prepares it for writing
     VMWriter(ofstream &ofs);
 
     VMWriter(){};
+
+    void setClassName(string &);
 
     VMWriter &operator=(VMWriter &);
 
@@ -249,6 +252,8 @@ private:
     ofstream ost;
     SymbolTable ST;
 
+    int labelC = 0;
+
     string className;
     bool isClassNameStore = false;
 
@@ -271,7 +276,7 @@ public:
     void CompileParameterList();
 
     //compiles a subroutine's body
-    void CompileSubroutineBody();
+    void CompileSubroutineBody(string &, int);
 
     //compiles a var declaration
     void CompileVarDec();

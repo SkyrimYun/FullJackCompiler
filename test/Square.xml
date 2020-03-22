@@ -16,9 +16,7 @@
 </classVarDec>
 <subroutineDec>
 <keyword> constructor </keyword>
-<identifier> Square </identifier> 
 <identifier> new </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 <keyword> int </keyword>
 <identifier> Ax </identifier> 
@@ -36,44 +34,36 @@
 <letStatement>
 <keyword> let </keyword>
 <identifier> x </identifier> int 15 0
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> Ax </identifier> int 27 0
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> y </identifier> int 15 1
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> Ay </identifier> int 27 1
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> size </identifier> int 15 2
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> Asize </identifier> int 27 2
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> draw </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <returnStatement>
 <keyword> return </keyword>
@@ -90,9 +80,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> dispose </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -104,7 +92,6 @@
 <identifier> Memory </identifier> 
 <symbol> . </symbol>
 <identifier> deAlloc </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -113,7 +100,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <returnStatement>
 <keyword> return </keyword>
@@ -125,9 +111,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> draw </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -139,7 +123,6 @@
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -148,14 +131,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -190,7 +171,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <returnStatement>
 <keyword> return </keyword>
@@ -202,9 +182,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> erase </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -216,7 +194,6 @@
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -225,14 +202,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -267,7 +242,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <returnStatement>
 <keyword> return </keyword>
@@ -279,9 +253,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> incSize </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -346,16 +318,13 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> erase </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> size </identifier> int 15 2
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> size </identifier> int 15 2
@@ -365,16 +334,13 @@
 <integerConstant> 2 </integerConstant>
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> draw </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 </statements>
 <symbol> } </symbol>
@@ -389,9 +355,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> decSize </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -416,16 +380,13 @@
 <doStatement>
 <keyword> do </keyword>
 <identifier> erase </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> size </identifier> int 15 2
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> size </identifier> int 15 2
@@ -435,16 +396,13 @@
 <integerConstant> 2 </integerConstant>
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> draw </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 </statements>
 <symbol> } </symbol>
@@ -459,9 +417,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> moveUp </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -488,7 +444,6 @@
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -497,14 +452,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -553,12 +506,10 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> y </identifier> int 15 1
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> y </identifier> int 15 1
@@ -568,14 +519,12 @@
 <integerConstant> 2 </integerConstant>
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -584,14 +533,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -626,7 +573,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 </statements>
 <symbol> } </symbol>
@@ -641,9 +587,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> moveDown </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -680,7 +624,6 @@
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -689,14 +632,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -731,12 +672,10 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> y </identifier> int 15 1
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> y </identifier> int 15 1
@@ -746,14 +685,12 @@
 <integerConstant> 2 </integerConstant>
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -762,14 +699,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -818,7 +753,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 </statements>
 <symbol> } </symbol>
@@ -833,9 +767,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> moveLeft </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -862,7 +794,6 @@
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -871,14 +802,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -927,12 +856,10 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> x </identifier> int 15 0
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> x </identifier> int 15 0
@@ -942,14 +869,12 @@
 <integerConstant> 2 </integerConstant>
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -958,14 +883,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -1000,7 +923,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 </statements>
 <symbol> } </symbol>
@@ -1015,9 +937,7 @@
 </subroutineDec>
 <subroutineDec>
 <keyword> method </keyword>
-<keyword> void </keyword>
 <identifier> moveRight </identifier> 
-<symbol> ( </symbol>
 <parameterList>
 </parameterList>
 <symbol> ) </symbol>
@@ -1054,7 +974,6 @@
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -1063,14 +982,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -1105,12 +1022,10 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <letStatement>
 <keyword> let </keyword>
 <identifier> x </identifier> int 15 0
-<symbol> = </symbol>
 <expression>
 <term>
 <identifier> x </identifier> int 15 0
@@ -1120,14 +1035,12 @@
 <integerConstant> 2 </integerConstant>
 </term>
 </expression>
-<symbol> ; </symbol>
 </letStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> setColor </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -1136,14 +1049,12 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 <doStatement>
 <keyword> do </keyword>
 <identifier> Screen </identifier> 
 <symbol> . </symbol>
 <identifier> drawRectangle </identifier> 
-<symbol> ( </symbol>
 <expressionList>
 <expression>
 <term>
@@ -1192,7 +1103,6 @@
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-<symbol> ; </symbol>
 </doStatement>
 </statements>
 <symbol> } </symbol>

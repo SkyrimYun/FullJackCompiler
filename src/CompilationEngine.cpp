@@ -90,6 +90,7 @@ void CompilationEngine::CompileClass()
                 if (!isClassNameStore)
                 {
                     className = tokenizer.tokenVal();
+                    writer.setClassName(className);
                     isClassNameStore = true;
                 }
                 writeXML();
@@ -142,30 +143,29 @@ void CompilationEngine::CompileSubroutineDec()
     writeLine("<subroutineDec>");
     writeXML(); // write type of subroutine (constructor, method, function)
 
+    string subName;
+    int subType = tokenizer.keyWord();
     ST.startSubroutine();
     if (tokenizer.tokenVal() == "method")
         ST.define("this", className, ARGUMENT); // write 'this' to argument 0
 
-    // write the return type and the name of this subroutine
-    while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '('))
-    {
-        tokenizer.advance();
-        if (tokenizer.tokenType() == KEYWORD || tokenizer.tokenType() == SYMBOL || tokenizer.tokenType() == IDENTIFIER)
-        {
-            writeXML();
-        }
-    }
+    tokenizer.advance();
+    //return type
+    tokenizer.advance();
+    //subroutine name
 
-    if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '(')
-    {
-        CompileParameterList();
-    }
+    writeXML();
+    subName = tokenizer.identifier();
+
+    tokenizer.advance();
+
+    CompileParameterList();
 
     tokenizer.advance();
 
     if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '{')
     {
-        CompileSubroutineBody();
+        CompileSubroutineBody(subName, subType);
     }
     writeLine("</subroutineDec>");
 }
@@ -199,7 +199,7 @@ void CompilationEngine::CompileParameterList()
     writeXML();
 }
 
-void CompilationEngine::CompileSubroutineBody()
+void CompilationEngine::CompileSubroutineBody(string &subName, int subType)
 {
     writeLine("<subroutineBody>");
     writeXML(); // write '{'
@@ -210,8 +210,24 @@ void CompilationEngine::CompileSubroutineBody()
         CompileVarDec();
         tokenizer.advance();
     }
+
+    int numLocal = ST.VarCount(VAR);
+    writer.writeFuncation(subName, numLocal);
+    if (subType == METHOD)
+    {
+        writer.writePush(ARGUMENT, 0);
+        writer.writePop(POINTER, 0);
+    }
+
+    if (subType == CONSTRUCTOR)
+    {
+        writer.writePush(CONSTANT, ST.VarCount(FIELD));
+        writer.writeCall("Memory.alloc", 1);
+        writer.writePop(POINTER, 0);
+    }
+
     CompileStatements();
-    writeXML();
+    writeXML(); // write '}'
     writeLine("</subroutineBody>");
 }
 
@@ -280,20 +296,41 @@ void CompilationEngine::CompiileLet()
 {
     writeLine("<letStatement>");
     writeXML();
+
+    string lval;
+    bool isArray = false;
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ';'))
     {
-
         tokenizer.advance();
-        if (tokenizer.tokenType() == SYMBOL || tokenizer.tokenType() == IDENTIFIER)
+        if (tokenizer.tokenType() == IDENTIFIER)
         {
             writeXML();
+            lval = tokenizer.identifier();
+            writer.writePush(ST.KindOf(lval), ST.IndexOf(lval));
         }
 
         if (tokenizer.tokenType() == SYMBOL)
         {
-            if (tokenizer.symbol() == '=' || tokenizer.symbol() == '[')
+            if (tokenizer.symbol() == '=')
             {
                 CompiileExpression();
+                if (isArray)
+                {
+                    writer.writePop(TEMP, 0);
+                    writer.writePop(POINTER, 1);
+                    writer.writePush(TEMP, 0);
+                    writer.writePop(THAT, 0);
+                }
+                else
+                    writer.writePop(ST.KindOf(lval), ST.IndexOf(lval));
+            }
+            else if (tokenizer.symbol() == '[')
+            {
+                isArray = true;
+                CompiileExpression();
+                writer.writeArithmetic('+');
+                tokenizer.advance();
+                writeXML(); // write ']'
             }
         }
     }
@@ -306,12 +343,17 @@ void CompilationEngine::CompileIf()
     writeLine("<ifStatement>");
     writeXML();
 
+    int curLabelC = labelC;
+    labelC++;
+
     tokenizer.advance();
     if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '(')
     {
 
         writeXML(); // write '('
         CompiileExpression();
+        writer.writeArithmetic('~');
+        writer.writeIf("else" + curLabelC);
 
         // write ')'
         tokenizer.advance();
@@ -326,7 +368,10 @@ void CompilationEngine::CompileIf()
         CompileStatements();
 
         writeXML(); // write '}'
+        writer.writeGoto("endif" + curLabelC);
     }
+
+    writer.writeLabel("else" + curLabelC);
 
     tokenizer.advance();
     if (tokenizer.tokenType() == KEYWORD && tokenizer.keyWord() == ELSE)
@@ -346,6 +391,7 @@ void CompilationEngine::CompileIf()
         tokenizer.rollBack();
     }
 
+    writer.writeLabel("endif" + curLabelC);
     writeLine("</ifStatement>");
 }
 
@@ -354,12 +400,18 @@ void CompilationEngine::CompiileWhile()
     writeLine("<whileStatement>");
     writeXML(); // write "while"
 
+    int curLabelC = labelC;
+    labelC++;
+    writer.writeLabel("while" + to_string(curLabelC));
+
     tokenizer.advance();
     if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '(')
     {
 
         writeXML(); // write '('
         CompiileExpression();
+        writer.writeArithmetic('~');
+        writer.writeIf("endwhile" + to_string(curLabelC));
 
         // write ')'
         tokenizer.advance();
@@ -372,51 +424,87 @@ void CompilationEngine::CompiileWhile()
         tokenizer.advance();
 
         CompileStatements();
+        writer.writeGoto("while" + to_string(curLabelC));
 
         writeXML(); // write '}'
     }
 
+    writer.writeLabel("endwhile" + to_string(curLabelC));
     writeLine("</whileStatement>");
 }
 
 void CompilationEngine::CompiileDo()
 {
     writeLine("<doStatement>");
-    writeXML();
+    writeXML(); // write 'do'
+    string funcName;
+    string objName;
+    int numArg = 0;
     while (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ';'))
     {
         tokenizer.advance();
 
-        if (tokenizer.tokenType() == IDENTIFIER || tokenizer.tokenType() == SYMBOL || tokenizer.tokenType() == KEYWORD)
+        if (tokenizer.tokenType() == IDENTIFIER)
         {
             writeXML();
+            funcName = tokenizer.identifier();
+        }
+
+        if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '.')
+        {
+            writeXML();
+            objName = funcName;
         }
 
         if (tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == '(')
         {
-            CompileExpressionList();
+            if (objName == "") // in-class function
+            {
+                numArg++;
+                writer.writePush(POINTER, 0);
+            }
+            else if (ST.KindOf(objName) != NONE) // user-defined object
+            {
+                numArg++;
+                writer.writePush(ST.KindOf(objName), ST.IndexOf(objName));
+                funcName = ST.TypeOf(objName) + "." + funcName;
+            }
+            else // system function
+            {
+                funcName = objName + "." + funcName;
+            }
+
+            numArg += CompileExpressionList();
             writeXML(); // write ')'
         }
     }
+    writer.writeCall(funcName, numArg);
+    writer.writePop(TEMP, 0);
     writeLine("</doStatement>");
 }
 
 void CompilationEngine::CompiileReturn()
 {
     writeLine("<returnStatement>");
-    writeXML();
+    writeXML(); // write 'retrun'
 
     tokenizer.advance();
     if (!(tokenizer.tokenType() == SYMBOL && tokenizer.symbol() == ';'))
     {
         tokenizer.rollBack();
         CompiileExpression();
+
         // write ';'
         tokenizer.advance();
         writeXML();
     }
-    else
-        writeXML();
+    else //void
+    {
+        writeXML(); //write ';'
+        writer.writePush(CONSTANT, 0);
+    }
+
+    writer.writeReturn();
 
     writeLine("</returnStatement>");
 }
@@ -427,20 +515,19 @@ void CompilationEngine::CompiileExpression()
 {
     writeLine("<expression>");
 
-    do
+    tokenizer.advance();
+    CompileTerm();
+    tokenizer.advance();
+
+    while (tokenizer.tokenType() == SYMBOL && tokenizer.isOperator())
     {
+        writeXML(); // write operator
+        char operand = tokenizer.symbol();
         tokenizer.advance();
         CompileTerm();
+        writer.writeArithmetic(operand);
         tokenizer.advance();
-
-        if (tokenizer.tokenType() == SYMBOL && tokenizer.isOperator())
-        {
-            writeXML(); // write operator
-            writer.writeArithmetic(tokenizer.symbol());
-        }
-
-    } while (tokenizer.tokenType() == SYMBOL && tokenizer.isOperator());
-
+    }
     tokenizer.rollBack();
     writeLine("</expression>");
 }
@@ -480,7 +567,7 @@ void CompilationEngine::CompileTerm()
                 int numArg = CompileExpressionList() + 1;
                 writeXML(); //write ")"
 
-                string funcationCall = Name + '.' + methodName;
+                string funcationCall = ST.TypeOf(Name) + '.' + methodName;
                 writer.writeCall(funcationCall, numArg);
                 break;
             }
@@ -498,9 +585,8 @@ void CompilationEngine::CompileTerm()
             case '[':
             {
                 writeXML();
-                CompiileExpression();
-
                 writer.writePush(ST.KindOf(Name), ST.IndexOf(Name));
+                CompiileExpression();
                 writer.writeArithmetic('+');
                 writer.writePop(POINTER, 1);
                 writer.writePush(THAT, 0);
@@ -553,7 +639,7 @@ void CompilationEngine::CompileTerm()
     else if (tokenizer.tokenType() == KEYWORD)
     {
         string curKey = tokenizer.tokenVal();
-        if (curKey == "true" || curKey == "flase" || curKey = "null" || curKey == "this")
+        if (curKey == "true" || curKey == "flase" || curKey == "null" || curKey == "this")
         {
             switch (tokenizer.keyWord())
             {

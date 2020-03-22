@@ -1,126 +1,314 @@
+function class.new -1
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push this 0
 push argument 0
+pop nmsl 0
+push this 1
 push argument 1
+pop nmsl 1
+push this 2
 push argument 2
+pop nmsl 2
+push pointer 0
+call class.draw 1
+pop temp 0
+push pointer 0
+return
+function class.dispose -1
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function class.draw -1
+push argument 0
+pop pointer 0
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
 push this 0
-add
 push this 2
+add
 push this 1
-add
 push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function class.erase -1
+push argument 0
+pop pointer 0
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
 push this 0
-add
 push this 2
+add
 push this 1
-add
 push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function class.incSize -1
+push argument 0
+pop pointer 0
 push this 1
-add
 push this 2
+add
+push constant 254
+lt
+push this 0
+push this 2
+add
+push constant 510
 lt
 and
-push this 0
+not
+if-goto else
+push pointer 0
+call class.erase 1
+pop temp 0
+push this 2
+push this 2
+push constant 2
 add
+pop nmsl 2
+push pointer 0
+call class.draw 1
+pop temp 0
+goto endif
+label else
+label endif
+push constant 0
+return
+function class.decSize -1
+push argument 0
+pop pointer 0
 push this 2
-lt
-push this 2
-add
-push this 2
+push constant 2
 gt
+not
+if-goto lse
+push pointer 0
+call class.erase 1
+pop temp 0
 push this 2
+push this 2
+push constant 2
 b
+pop nmsl 2
+push pointer 0
+call class.draw 1
+pop temp 0
+goto ndif
+label lse
+label ndif
+push constant 0
+return
+function class.moveUp -1
+push argument 0
+pop pointer 0
 push this 1
+push constant 1
 gt
+not
+if-goto se
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
-add
 push this 2
+add
+push constant 1
 b
 push this 0
-add
 push this 2
-push this 1
 add
-push this 2
 push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 1
+push this 1
+push constant 2
 b
+pop nmsl 1
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
 push this 0
-add
 push this 2
-push this 1
 add
 push this 1
+push constant 1
 add
+call Screen.drawRectangle 4
+pop temp 0
+goto dif
+label se
+label dif
+push constant 0
+return
+function class.moveDown -1
+push argument 0
+pop pointer 0
+push this 1
 push this 2
+add
+push constant 254
 lt
+not
+if-goto e
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
 push this 0
-add
 push this 2
-push this 1
 add
 push this 1
+push constant 1
 add
+call Screen.drawRectangle 4
+pop temp 0
+push this 1
+push this 1
+push constant 2
+add
+pop nmsl 1
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
-add
 push this 2
+add
+push constant 1
 b
 push this 0
-add
 push this 2
+add
 push this 1
-add
 push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto if
+label e
+label if
+push constant 0
+return
+function class.moveLeft -1
+push argument 0
+pop pointer 0
 push this 0
+push constant 1
 gt
+not
+if-goto 
+call Screen.setColor 1
+pop temp 0
 push this 0
-add
 push this 2
+add
+push constant 1
 b
 push this 1
 push this 0
-add
 push this 2
+add
 push this 1
-add
 push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
 push this 0
+push this 0
+push constant 2
 b
+pop nmsl 0
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
 push this 0
+push constant 1
 add
 push this 1
-add
 push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto f
+label 
+label f
+push constant 0
+return
+function class.moveRight -1
+push argument 0
+pop pointer 0
 push this 0
-add
 push this 2
+add
+push constant 510
 lt
+not
+if-goto while
+call Screen.setColor 1
+pop temp 0
 push this 0
 push this 1
 push this 0
+push constant 1
 add
 push this 1
-add
 push this 2
-push this 0
 add
+call Screen.drawRectangle 4
+pop temp 0
 push this 0
+push this 0
+push constant 2
 add
+pop nmsl 0
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
+push this 0
 push this 2
+add
+push constant 1
 b
 push this 1
 push this 0
-add
 push this 2
+add
 push this 1
-add
 push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto 
+label while
+label 
+push constant 0
+return
